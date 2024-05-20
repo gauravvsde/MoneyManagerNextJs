@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react'
 import {Button} from "@/components/ui/button";
-import {PenBox} from "lucide-react";
+import {Calendar as CalendarIcon, PenBox} from "lucide-react";
 
 import {
     Dialog, DialogClose,
@@ -17,6 +17,10 @@ import {db} from "@/utils/dbConfig";
 import {eq} from "drizzle-orm";
 import {Budgets} from "@/utils/schema";
 import {toast} from "sonner";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {cn} from "@/lib/utils";
+import {format} from "date-fns";
+import {Calendar} from "@/components/ui/calendar";
 
 function EditBudget({budgetInfo, refreshData}) {
 
@@ -32,12 +36,14 @@ function EditBudget({budgetInfo, refreshData}) {
 
     const [name, setName] = useState();
     const [amount, setAmount] = useState();
+    const [date, setDate] = useState();
 
     const onUpdateBudget = async() => {
 
         const result = await db.update(Budgets).set({
             name: name,
             amount: amount,
+            date: date,
             icon: emojiIcon,
         }).where(eq(Budgets.id, budgetInfo.id))
             .returning()
@@ -75,13 +81,17 @@ function EditBudget({budgetInfo, refreshData}) {
                                     <h2 className='text-black font-medium my-2'>Budget Name</h2>
                                     <Input placeholder='e.g. Home Decor'
                                            defaultValue={budgetInfo?.name}
-                                           onChange={(e) => {setName(e.target.value)}}/>
+                                           onChange={(e) => {
+                                               setName(e.target.value)
+                                           }}/>
                                 </div>
                                 <div className='mt-2'>
                                     <h2 className='text-black font-medium my-2'>Budget Amount</h2>
                                     <Input placeholder='e.g. 500'
                                            defaultValue={budgetInfo?.amount}
-                                           onChange={(e) => {setAmount(e.target.value)}}/>
+                                           onChange={(e) => {
+                                               setAmount(e.target.value)
+                                           }}/>
                                 </div>
                             </div>
 
@@ -90,7 +100,7 @@ function EditBudget({budgetInfo, refreshData}) {
                     <DialogFooter className="sm:justify-start">
                         <DialogClose asChild>
                             <Button
-                                disabled={!(name && amount)}
+                                disabled={!(name && amount && date)}
                                 onClick={() => onUpdateBudget()}
                                 className='mt-5 w-full'>Update</Button>
                         </DialogClose>

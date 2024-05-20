@@ -68,7 +68,7 @@ export default function Page() {
                             Control Your Expenses Wisely.
                         </p>
                     </div>
-                    <SignIn path="/sign-in" />
+                    <SignIn path="/sign-in" redirect="/dashboard" />
                 </div>
             </main>
         </div>
