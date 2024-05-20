@@ -28,7 +28,6 @@ function CreateBudget({refreshData}) {
     const user = useUser();
 
     const onCreateBudget = async() => {
-        console.log("user ", user);
         const result = await db.insert(Budgets)
             .values({
                 name: budgetName,
@@ -66,7 +65,6 @@ function CreateBudget({refreshData}) {
                                 <div className='absolute z-20'>
                                     <EmojiPicker open={openEmojiDialog}
                                                  onEmojiClick={(e) => {
-                                                     console.log(e)
                                                      setEmojiIcon(e.emoji)
                                                      setOpenEmojiDialog(false)
                                                  }}/>

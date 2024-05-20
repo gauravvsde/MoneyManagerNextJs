@@ -19,27 +19,23 @@ function SideNav() {
             id:2,
             name:'Budgets',
             icon: PiggyBank,
-            path: 'dashboard/budgets',
+            path: '/dashboard/budgets',
         },
         {
             id:3,
             name:'Expenses',
             icon: ReceiptText,
-            path: 'dashboard/expenses',
+            path: '/dashboard/expenses',
         },
         {
             id:4,
             name:'Upgrade',
             icon: ShieldCheck,
-            path: 'dashboard/upgrade',
+            path: '/dashboard/upgrade',
         }
     ]
     
     const path=usePathname();
-
-    useEffect(() => {
-        console.log(path)
-    }, [path]);
 
 
     return (

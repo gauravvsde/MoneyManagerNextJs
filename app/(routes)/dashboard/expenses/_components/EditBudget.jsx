@@ -34,8 +34,6 @@ function EditBudget({budgetInfo, refreshData}) {
     const [amount, setAmount] = useState();
 
     const onUpdateBudget = async() => {
-        console.log("name", name)
-        console.log("amount", amount)
 
         const result = await db.update(Budgets).set({
             name: name,
@@ -69,7 +67,6 @@ function EditBudget({budgetInfo, refreshData}) {
                                 <div className='absolute z-20'>
                                     <EmojiPicker open={openEmojiDialog}
                                                  onEmojiClick={(e) => {
-                                                     console.log(e)
                                                      setEmojiIcon(e.emoji)
                                                      setOpenEmojiDialog(false)
                                                  }}/>
