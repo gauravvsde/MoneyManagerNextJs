@@ -46,7 +46,6 @@ function Dashboard() {
             .where(eq(Budgets.createdBy, user?.user?.primaryEmailAddress?.emailAddress))
             .orderBy(desc(Expenses.id));
 
-        console.log("all expenses", result);
         setExpenseList(result);
 
     }

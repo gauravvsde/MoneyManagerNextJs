@@ -72,7 +72,6 @@ function ExpensesScreen({params}) {
             const result = await db.delete(Budgets)
                 .where(eq(Budgets.id, params.id))
                 .returning();
-            console.log("delete budget", result);
         }
         toast("Budget deleted successfully.")
         route.replace('/dashboard/budgets')
@@ -103,8 +102,6 @@ function ExpensesScreen({params}) {
                     </AlertDialogContent>
                 </AlertDialog>
             </div>
-
-
         </h2>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5'>
                 {budgetInfo ? <BudgetItem budget={budgetInfo}/> :
@@ -114,7 +111,6 @@ function ExpensesScreen({params}) {
                 <AddExpense budgetId={params.id} user={user} refreshData={() => getBudgetInfo()} />
             </div>
             <div className='mt-4'>
-                <h2 className='font-bold text-lg'>Latest Expenses</h2>
                 <ExpenseListTable expenseList={expenseList} refreshData={() => getBudgetInfo()} />
             </div>
         </div>

@@ -4,9 +4,7 @@ import Link from "next/link";
 function BudgetItem({budget}) {
 
     const calculateProgressPercentage = () => {
-        // console.log("budget", budget);
         const percentage=(budget.totalSpend/parseInt(budget.amount,10)) * 100;
-        // console.log("percentage", percentage)
         return percentage.toFixed(2);
     }
 
