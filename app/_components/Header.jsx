@@ -10,12 +10,22 @@ function Header() {
 
     return (
         <div className="p-5 flex justify-between items-center w-full border shadow-sm">
-            <Image src={'./logo.svg'} alt='logo' width={160} height={160} />
-            { isSignedIn ? <UserButton/> :
-                <Link href="/sign-in">
-                    <Button>Get Started</Button>
-                </Link>
-                }
+            <Image src={'./logo.svg'} alt='logo' width={160} height={160}/>
+            <div className={'flex-row flex items-center justify-between'}>
+                <div>
+                    <Link href="/dashboard">
+                        <Button>DashBoard</Button>
+                    </Link>
+                </div>
+                <div className={'ml-5'}>
+                    {isSignedIn ? <UserButton/> :
+                        <Link href="/sign-in">
+                            <Button>Get Started</Button>
+                        </Link>
+                    }
+                </div>
+            </div>
+
         </div>
     )
 }
