@@ -6,13 +6,30 @@ import {desc, eq} from "drizzle-orm";
 import {Expenses} from "@/utils/schema";
 
 function ExpensesDashboard() {
+    const [filteredExpenses, setFilteredExpenses] = useState([]);
+    const [selectedMonth, setSelectedMonth] = useState("");
+    const [expenseList, setExpenseList] = useState();
+
+
+    const handleMonthChange = (event) => {
+        const month = parseInt(event.target.value);
+        setSelectedMonth(month);
+        filterExpensesByMonth(month);
+    };
+
+    const filterExpensesByMonth = (month) => {
+        const filtered = expenseList.filter(expense => {
+            const expenseMonth = new Date(expense.createdAt).getMonth() + 1; // getMonth() returns 0-11, add 1 to match month number
+            return expenseMonth === month;
+        });
+        setFilteredExpenses(filtered);
+        setExpenseList(filtered)
+    };
 
     useEffect(() => {
         getExpensesList()
-    }, []);
+    }, [selectedMonth]);
 
-
-    const [expenseList, setExpenseList] = useState();
 
     const getExpensesList = async() => {
         const result = await db.select().from(Expenses)
@@ -21,7 +38,25 @@ function ExpensesDashboard() {
     }
     return (
         <div className={'p-5'}>
-            <ExpenseListTable expenseList={expenseList}/>
+            <div className={'mb-10'}>
+                <select value={selectedMonth} onChange={handleMonthChange}>
+                    <option value="">Select a month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            {selectedMonth !== "" ? <ExpenseListTable expenseList={filteredExpenses} refreshData={() => getExpensesList()}/>
+                :<ExpenseListTable expenseList={expenseList} refreshData={() => getExpensesList()}/> }
         </div>
     )
 }
