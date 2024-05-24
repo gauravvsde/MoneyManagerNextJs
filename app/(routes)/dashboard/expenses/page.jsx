@@ -39,6 +39,7 @@ function ExpensesDashboard() {
     return (
         <div className={'p-5'}>
             <div className={'mb-10'}>
+                <h2 className='font-bold text-lg'>Filter By Month</h2>
                 <select value={selectedMonth} onChange={handleMonthChange}>
                     <option value="">Select a month</option>
                     <option value="1">January</option>
