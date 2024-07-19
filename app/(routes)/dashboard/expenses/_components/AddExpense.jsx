@@ -32,6 +32,7 @@ function AddExpense({budgetId, user, refreshData}) {
           amount: amount,
           budgetId: budgetId,
           createdAt: formattedDate,
+          createdBy: user?.user?.primaryEmailAddress?.emailAddress,
       }).returning({insertedId: Budgets.id})
 
       setAmount('')

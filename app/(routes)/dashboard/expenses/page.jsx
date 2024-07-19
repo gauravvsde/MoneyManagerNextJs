@@ -4,12 +4,14 @@ import ExpenseListTable from "@/app/(routes)/dashboard/expenses/_components/Expe
 import {db} from "@/utils/dbConfig";
 import {desc, eq} from "drizzle-orm";
 import {Expenses} from "@/utils/schema";
+import {useUser} from "@clerk/nextjs";
 
 function ExpensesDashboard() {
     const [filteredExpenses, setFilteredExpenses] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState("");
     const [expenseList, setExpenseList] = useState();
 
+    const user = useUser();
 
     const handleMonthChange = (event) => {
         const month = parseInt(event.target.value);
@@ -33,6 +35,7 @@ function ExpensesDashboard() {
 
     const getExpensesList = async() => {
         const result = await db.select().from(Expenses)
+            .where(eq(Expenses.createdBy, user?.user?.primaryEmailAddress?.emailAddress))
             .orderBy(desc(Expenses.id));
         setExpenseList(result)
     }
